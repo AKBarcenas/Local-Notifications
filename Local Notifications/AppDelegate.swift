@@ -14,8 +14,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
+    /*
+     * Function Name: application
+     * Parameters: application - the application itself in object form.
+     *   launchOptions - a dictionary containing why the application launched.
+     * Purpose: This method checks if the application was launched by a local notification.
+     * Return Value: None
+     */
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        if let options = launchOptions {
+            if let notification = options[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
+                if let userInfo = notification.userInfo {
+                    let customField1 = userInfo["CustomField1"] as! String
+                }
+            }
+        }
+        
         return true
     }
 
@@ -39,6 +54,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    /*
+     * Function Name: application
+     * Parameters: application - the application itself in object form.
+     *   notification - the local notification that the user recieved.
+     * Purpose: This method that handles when a local notification is sent to the user while they
+     *   are currently using the application.
+     * Return Value: None
+     */
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        if let userInfo = notification.userInfo {
+            let customField1 = userInfo["CustomField1"] as! String
+            print("didReceiveLocalNotification: \(customField1)")
+        }
     }
 
 
